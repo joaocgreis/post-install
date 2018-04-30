@@ -1,0 +1,32 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: no
+  gather_facts: no
+  tasks:
+
+  - name: 'Remove Empty Directories'
+    shell: 'rmdir --ignore-fail-on-non-empty ~/Music ~/Pictures ~/Public ~/Templates ~/Videos || true'
+    args: {warn: false} # Don't display Ansible warning about using the file module for this
+  - name: 'Remove Examples Link'
+    file: path='~/examples.desktop' state=absent
+
+  - name: 'Set CCache limit to 10G'
+    shell: 'ccache -M 10G'
+  - name: 'Set CCache file limit to unlimited'
+    shell: 'ccache -F 0'
+
+##### Bash
+  - name: 'Add mv Alias'
+    lineinfile: create=yes path='~/.bash_aliases' regexp='^alias\s+mv=' line='alias mv="mv -iv "'
+  - name: 'Add cp Alias'
+    lineinfile: create=yes path='~/.bash_aliases' regexp='^alias\s+cp=' line='alias cp="cp -ivr "'
+  - name: 'Add rm Alias'
+    lineinfile: create=yes path='~/.bash_aliases' regexp='^alias\s+rm=' line='alias rm="rm -v "'
+  - name: 'Add psg Alias'
+    lineinfile: create=yes path='~/.bash_aliases' regexp='^alias\s+psg=' line='alias psg="ps aux | grep -v grep | grep "'
+
+  - name: 'Set HISTSIZE'
+    lineinfile: path='~/.bashrc' regexp='^HISTSIZE=' line='HISTSIZE=1000000'
+  - name: 'Set HISTFILESIZE'
+    lineinfile: path='~/.bashrc' regexp='^HISTFILESIZE=' line='HISTFILESIZE=10000000'
