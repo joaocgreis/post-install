@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# DOS to Unix line endings conversion
+
+sed -i 's/\r//' $@

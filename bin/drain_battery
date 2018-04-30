@@ -1,0 +1,11 @@
+#!/bin/bash
+trap 'kill $(jobs -p)' EXIT
+cat /dev/urandom | xz -1ec - > /dev/null &
+cat /dev/urandom | xz -1ec - > /dev/null &
+cat /dev/urandom | xz -1ec - > /dev/null &
+cat /dev/urandom | xz -1ec - > /dev/null &
+cat /dev/urandom | xz -1ec - > /dev/null &
+cat /dev/urandom | xz -1ec - > /dev/null &
+cat /dev/urandom | xz -1ec - > /dev/null &
+cat /dev/urandom | xz -1ec - > /dev/null &
+while true; do uptime; acpi; sleep 10; done

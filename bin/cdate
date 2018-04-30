@@ -1,0 +1,7 @@
+#!/bin/bash
+
+IFS=' ' read -a array <<< `echo {0..9} {A..Z} {a..z}`
+y=`date -u "+%y" | sed s/^0*//`
+m=`date -u "+%m" | sed s/^0*//`
+d=`date -u "+%d" | sed s/^0*//`
+echo ${array[$y]}${array[$m]}${array[$d]}
