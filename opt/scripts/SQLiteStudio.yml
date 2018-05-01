@@ -1,0 +1,27 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: no
+  gather_facts: no
+  tasks:
+
+##### SQLiteStudio
+  - name: 'Download SQLiteStudio'
+    unarchive: src='https://sqlitestudio.pl/files/sqlitestudio3/complete/linux64/sqlitestudio-3.1.1.tar.xz' dest='~/.local/opt' remote_src=yes
+  - name: 'Download SQLiteStudio Icon'
+    get_url: url='https://raw.githubusercontent.com/pawelsalawa/sqlitestudio/master/SQLiteStudio3/guiSQLiteStudio/img/sqlitestudio.svg' dest='~/.local/opt/SQLiteStudio/logo.svg'
+  - name: 'Create Shortcut Directory'
+    file: path='~/.local/share/applications' state=directory
+  - name: 'Create Shortcut'
+    copy:
+      dest: '~/.local/share/applications/SQLiteStudio.desktop'
+      content: |
+        [Desktop Entry]
+        Name=SQLiteStudio
+        Comment=SQLiteStudio
+        Exec={{ lookup('env','HOME') }}/.local/opt/SQLiteStudio/sqlitestudio
+        Path={{ lookup('env','HOME') }}
+        Icon={{ lookup('env','HOME') }}/.local/opt/SQLiteStudio/logo.svg
+        Terminal=false
+        Type=Application
+        StartupNotify=true
