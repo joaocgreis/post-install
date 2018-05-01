@@ -1,0 +1,27 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: no
+  gather_facts: no
+  tasks:
+
+##### Scala IDE
+  - name: 'Download Scala IDE'
+    unarchive: src='http://downloads.typesafe.com/scalaide-pack/4.7.0-vfinal-oxygen-212-20170929/scala-SDK-4.7.0-vfinal-2.12-linux.gtk.x86_64.tar.gz' dest='~/.local/opt' remote_src=yes
+  - name: 'Rename Directory'
+    command: 'mv -v ~/.local/opt/eclipse ~/.local/opt/ScalaIDE'
+  - name: 'Create Shortcut Directory'
+    file: path='~/.local/share/applications' state=directory
+  - name: 'Create Shortcut'
+    copy:
+      dest: '~/.local/share/applications/ScalaIDE.desktop'
+      content: |
+        [Desktop Entry]
+        Name=ScalaIDE
+        Comment=ScalaIDE
+        Exec={{ lookup('env','HOME') }}/.local/opt/ScalaIDE/eclipse
+        Path={{ lookup('env','HOME') }}
+        Icon={{ lookup('env','HOME') }}/.local/opt/ScalaIDE/icon.xpm
+        Terminal=false
+        Type=Application
+        StartupNotify=true
