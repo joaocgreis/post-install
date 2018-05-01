@@ -1,0 +1,23 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  gather_facts: no
+  tasks:
+
+##### Timidity
+  - name: 'Install Timidity Packages'
+    apt:
+      name:
+      - 'timidity'
+      - 'freepats'
+      - 'fluid-soundfont-gm'
+      - 'fluid-soundfont-gs'
+  - name: 'Uncomment All Timidity Sources'
+    replace: path='/etc/timidity/timidity.cfg' regexp='^#(source .*)' replace='\1'
+  - name: 'Download eawpats'
+    unarchive: src='http://distfiles.gentoo.org/distfiles/eawpats12_full.tar.gz' dest='/opt' remote_src=yes
+  - name: 'Add Timidity eawpats Directory'
+    lineinfile: path='/etc/timidity/timidity.cfg' line='dir /opt/eawpats/'
+  - name: 'Add Timidity eawpats Source'
+    lineinfile: path='/etc/timidity/timidity.cfg' line='source /opt/eawpats/linuxconfig/timidity.cfg'
