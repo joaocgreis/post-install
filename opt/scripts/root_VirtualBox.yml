@@ -1,0 +1,14 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  gather_facts: no
+  tasks:
+
+##### VirtualBox - https://www.virtualbox.org/wiki/Linux_Downloads
+  - name: 'Add Oracle Signing Key'
+    apt_key: url='https://www.virtualbox.org/download/oracle_vbox_2016.asc'
+  - name: 'Add VirtualBox Repository'
+    apt_repository: repo='deb https://download.virtualbox.org/virtualbox/debian bionic contrib'
+  - name: 'Install VirtualBox 5.2'
+    apt: name='virtualbox-5.2'
