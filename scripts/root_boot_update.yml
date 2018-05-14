@@ -1,0 +1,57 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  gather_facts: no
+  tasks:
+
+  - name: 'Create Directory'
+    file: path='/opt/boot_update' state=directory owner=root group=root
+
+  - name: 'Create Script'
+    copy:
+      dest: '/opt/boot_update/script'
+      owner: root
+      group: root
+      mode: 0755
+      content: |
+        #!/bin/bash -e
+        
+        NOW=$(date -u +"%Y%m%d-%H%M%SZ")
+        
+        mkdir -p /opt/boot_update/log
+        exec 2> /opt/boot_update/log/boot_update_${NOW}
+        exec 1>&2
+        set -x
+        
+        rm -fv /opt/boot_update/latest || true
+        ln -s /opt/boot_update/log/boot_update_${NOW} /opt/boot_update/latest
+        
+        date
+        
+        sleep 20
+        
+        export DEBIAN_FRONTEND=noninteractive
+        time apt-get -y update
+        time apt-get -y dist-upgrade
+        time apt-get -y autoremove
+        time apt-get -y clean
+        
+        time fstrim -av
+        
+        find /opt/boot_update/log -name boot_update_\* -and -not -name boot_update_${NOW} -and -not -iname \*xz -exec xz -9ev '{}' \;
+
+  - name: 'Create /etc/rc.local if it does not exist'
+    lineinfile:
+      path: '/etc/rc.local'
+      insertbefore: BOF
+      line: '#!/bin/sh -e'
+      create: yes
+      owner: root
+      group: root
+      mode: 0755
+
+  - name: 'Add update command to /etc/rc.local'
+    lineinfile:
+      path: '/etc/rc.local'
+      line: 'nohup /opt/boot_update/script > /dev/null &'
