@@ -10,7 +10,7 @@ git init &&
 git fetch joaocgreis/post-install &&
 git checkout -B ubuntu_18.04 joaocgreis/post-install/ubuntu_18.04 &&
 git reset --hard &&
-cd opt/scripts &&
+cd scripts &&
 sudo -H ./root_base.sh &&
 ansible-playbook -v base.yml) &&
 echo '========== SUCCESS =========='
