@@ -27,6 +27,7 @@
       - 'p7zip-full'
       - 'p7zip-rar'
       - 'lzop'
+      - 'par2'
       - 'mmv'
       - 'tree'
       - 'htop'
