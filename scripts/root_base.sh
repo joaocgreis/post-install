@@ -9,10 +9,8 @@ echo ========== Install Ansible ==========
 
 # http://docs.ansible.com/ansible/2.5/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu
 apt-get -y update
-apt-get -y install software-properties-common
-apt-add-repository -y ppa:ansible/ansible
-apt-get -y update
-apt-get -y install ansible
+apt-get -y install python3-pip
+pip3 install ansible
 
 echo ========== Run Ansible ==========
 

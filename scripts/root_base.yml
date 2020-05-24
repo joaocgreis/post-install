@@ -71,7 +71,6 @@
       - 'sqlite3'
       - 'python-all-dev'
       - 'python3-all-dev'
-      - 'python-pip'
       - 'libboost-all-dev'
       - 'freeglut3-dev'
       - 'libsqlite3-dev'
