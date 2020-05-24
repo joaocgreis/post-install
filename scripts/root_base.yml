@@ -109,6 +109,8 @@
       - 'dosbox'
       - 'variety'
       - 'ubuntu-restricted-extras'
+      - 'default-jre'
+      - 'default-jdk'
 
 ##### Base
   - name: 'Remove Amazon'
@@ -127,17 +129,6 @@
     apt_key: url='https://dl-ssl.google.com/linux/linux_signing_key.pub' state=present
   - name: 'Install Google Chrome'
     apt: deb='https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-
-##### Oracle Java 8
-  - name: 'Add WebUpd8 Java PPA'
-    apt_repository: repo='ppa:webupd8team/java'
-  - name: 'Accept Java Licence'
-    debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
-  - name: 'Install Java 8 Packages'
-    apt:
-      name:
-      - 'oracle-java8-installer'
-      - 'oracle-java8-set-default'
 
 ##### Clean up
   - name: 'APT Autoremove'
