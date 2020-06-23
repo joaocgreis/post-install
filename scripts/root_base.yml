@@ -96,6 +96,7 @@
       - 'inkscape'
       - 'dia'
       - 'gimp'
+      - 'gimp-plugin-registry'
       - 'imagemagick'
       - 'xsane'
       - 'vlc'
