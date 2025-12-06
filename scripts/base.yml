@@ -26,6 +26,26 @@
   - name: 'Add psg Alias'
     lineinfile: create=yes path='~/.bash_aliases' regexp='^alias\s+psg=' line='alias psg="ps aux | grep -v grep | grep "'
 
+# TODO add to aliases
+#mcd() {
+#  local NEWNAME="${1:-$(cdate)-$(date +%H%M%S)}" # If an argument is provided, use it
+#  mkdir -p "$NEWNAME"
+#  cd "$NEWNAME"
+#}
+#mcdtmp() {
+#  local i="${1:-$(date +%H%M%S)}" # If an argument is provided, use it
+#  if [[ "$i" == /* || "$i" == .* ]]; then
+#    echo "mcdtmp: error: name cannot start with '.' or '/'" >&2
+#    return 1
+#  fi
+#  local NEWNAME="$(cdate)-$i"
+#  if [[ "$(basename "$PWD")" != "tmp" ]]; then
+#    cd /tmp
+#  fi
+#  mkdir -p "$NEWNAME"
+#  cd "$NEWNAME"
+#}
+
   - name: 'Set HISTSIZE'
     lineinfile: path='~/.bashrc' regexp='^HISTSIZE=' line='HISTSIZE=1000000'
   - name: 'Set HISTFILESIZE'
